@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home Assistot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 50%;
+        }
+
+        .row {
+            display: flex;
+            width: 100%;
+        }
+
+        .section {
+            flex: 1;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .red { background-color: red; }
+        .blue { background-color: blue; }
+        .green { background-color: green; }
+        .rainbow { background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="section red" onclick="triggerScript('red')"></div>
+            <div class="section blue" onclick="triggerScript('blue')"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="section green" onclick="triggerScript('green')"></div>
+            <div class="section rainbow" onclick="triggerScript('rainbow')"></div>
+        </div>
+    </div>
+
+    <script>
+        function triggerScript(color) {
+            fetch(`/trigger_script/${color}`)
+                .then(response => response.text())
+                .then(message => console.log(message))
+                .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>
