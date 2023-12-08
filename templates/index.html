@@ -37,14 +37,14 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="section red" onmousedown="triggerScript('red')"></div>
-            <div class="section blue" onmousedown="triggerScript('blue')"></div>
+            <div class="section red" onclick="handleInteraction('red')" ontouchstart="handleInteraction('red')" onpointerdown="handleInteraction('red')"></div>
+            <div class="section blue" onclick="handleInteraction('blue')" ontouchstart="handleInteraction('blue')" onpointerdown="handleInteraction('blue')"></div>
         </div>
     </div>
     <div class="container">
         <div class="row">
-            <div class="section green" onmousedown="triggerScript('green')"></div>
-            <div class="section rainbow" onmousedown="triggerScript('rainbow')"></div>
+            <div class="section green" onclick="handleInteraction('green')" ontouchstart="handleInteraction('green')" onpointerdown="handleInteraction('green')"></div>
+            <div class="section rainbow" onclick="handleInteraction('rainbow')" ontouchstart="handleInteraction('rainbow')" onpointerdown="handleInteraction('rainbow')"></div>
         </div>
     </div>
 
@@ -55,10 +55,16 @@
                 .then(message => console.log(message))
                 .catch(error => console.error(error));
         }
-
-        document.oncontextmenu = function() {
+    
+        // Prevent the context menu from appearing on long press or right clicks
+        document.oncontextmenu = function () {
             return false;
         };
+    
+        // Handle both mouse clicks and touch events (pointerdown)
+        function handleInteraction(color) {
+            triggerScript(color);
+        }
     </script>
 </body>
 </html>
