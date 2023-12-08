@@ -1,3 +1,0 @@
-home-assistant:
-  longlived-access-key: Long-lived access tokens from bottom of profile page in Home Assistant
-  server: http://192.168.0.2:8123

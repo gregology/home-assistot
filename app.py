@@ -1,19 +1,12 @@
 from flask import Flask, render_template
 import requests
-import yaml
+import os
 
 app = Flask(__name__)
 
-# Function to read configuration from the YAML file
-def read_config():
-    with open('configuration.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-    return config.get('home-assistant', {})
-
-# Extract values at startup
-config_data = read_config()
-longlived_access_key = config_data.get('longlived-access-key', '')
-server_url = config_data.get('server', '')
+# Extract values from environment variables
+longlived_access_key = os.environ.get('LONG_LIVED_ACCESS_KEY', '')
+server_url = os.environ.get('SERVER_URL', '')
 
 # Home Assistant API endpoint for script execution
 api_endpoint = f"{server_url}/api/services/script/turn_on"
@@ -40,4 +33,4 @@ def trigger_script(color):
     return f"Script triggered: {script_name}. Response: {response.status_code}"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
