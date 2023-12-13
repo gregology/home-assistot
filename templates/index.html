@@ -49,8 +49,8 @@
     </div>
 
     <script>
-        function triggerScript(color) {
-            fetch(`/trigger_script/${color}`)
+        function triggerScript(script_name) {
+            fetch(`/trigger_script/${script_name}`)
                 .then(response => response.text())
                 .then(message => console.log(message))
                 .catch(error => console.error(error));
@@ -59,6 +59,29 @@
         document.oncontextmenu = function() {
             return false;
         };
+
+        // Define a mapping of characters to colors
+        const keyMappings = {
+                '`12345trewq': 'red',
+                '67890yuiop[]\\': 'blue',
+                'asdfgbvcxz': 'green',
+                'hjkl;\'/.,mn': 'rainbow',
+                ' ': 'spacebar', // spacebar
+            };
+
+        // Handle keyboard events
+        document.addEventListener('keydown', function (event) {
+            // Convert the pressed key to lowercase
+            const pressedKey = event.key.toLowerCase();
+
+            // Check if the pressed key is part of any keyMappings
+            for (const keys in keyMappings) {
+                if (keys.includes(pressedKey)) {
+                    triggerScript(keyMappings[keys]);
+                    break;
+                }
+            }
+        });
     </script>
 </body>
 </html>
