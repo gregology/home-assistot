@@ -69,16 +69,31 @@
                 ' ': 'spacebar', // spacebar
             };
 
+        // Store the last trigger time
+        let lastTriggerTime = 0;
+
+        // Minimum time between triggers in milliseconds (1 second)
+        const minTimeBetweenTriggers = 1000;
+
         // Handle keyboard events
         document.addEventListener('keydown', function (event) {
             // Convert the pressed key to lowercase
             const pressedKey = event.key.toLowerCase();
 
-            // Check if the pressed key is part of any keyMappings
-            for (const keys in keyMappings) {
-                if (keys.includes(pressedKey)) {
-                    triggerScript(keyMappings[keys]);
-                    break;
+            // Get the current time
+            const currentTime = new Date().getTime();
+
+            // Check if enough time has passed since the last trigger
+            if (currentTime - lastTriggerTime >= minTimeBetweenTriggers) {
+                // Check if the pressed key is part of any keyMappings
+                for (const keys in keyMappings) {
+                    if (keys.includes(pressedKey)) {
+                        triggerScript(keyMappings[keys]);
+
+                        // Update the last trigger time
+                        lastTriggerTime = currentTime;
+                        break;
+                    }
                 }
             }
         });
